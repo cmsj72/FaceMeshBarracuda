@@ -1,24 +1,25 @@
 using UnityEngine;
 
-namespace MediaPipe.FaceMesh {
-
-//
-// Vertex index table class mainly used to provide eye to face mesh vertex
-// transfer table
-//
-static class IndexTable
+namespace MediaPipe.FaceMesh
 {
-    // Create a compute buffer holding the eye-to-face transfer table.
-    public static ComputeBuffer CreateEyeToFaceLandmarkBuffer()
-    {
-        var buffer = new ComputeBuffer(EyeToFaceLandmark.Length, sizeof(uint));
-        buffer.SetData(EyeToFaceLandmark);
-        return buffer;
-    }
 
-    // Eye-to-face transfer table
-    public static uint[] EyeToFaceLandmark =
+    //
+    // Vertex index table class mainly used to provide eye to face mesh vertex
+    // transfer table
+    //
+    static class IndexTable
     {
+        // Create a compute buffer holding the eye-to-face transfer table.
+        public static ComputeBuffer CreateEyeToFaceLandmarkBuffer()
+        {
+            var buffer = new ComputeBuffer(EyeToFaceLandmark.Length, sizeof(uint));
+            buffer.SetData(EyeToFaceLandmark);
+            return buffer;
+        }
+
+        // Eye-to-face transfer table
+        public static uint[] EyeToFaceLandmark =
+        {
         // Left eye
         // eye lower contour
         33,
@@ -187,6 +188,6 @@ static class IndexTable
         285,
         417
     };
-}
+    }
 
 } // namespace MediaPipe.FaceMesh

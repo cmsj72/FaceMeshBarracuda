@@ -1,42 +1,43 @@
 using Unity.Mathematics;
 
-namespace MediaPipe.FaceMesh {
-
-//
-// Eye region calculator class
-//
-
-sealed class EyeRegion
+namespace MediaPipe.FaceMesh
 {
-    #region Exposed proeprties
 
-    public float4x4 CropMatrix { get; private set; }
+    //
+    // Eye region calculator class
+    //
 
-    #endregion
-
-    #region Internal state
-
-    bool _flipped;
-
-    #endregion
-
-    #region Public method
-
-    public EyeRegion(bool flipped = false)
-      => _flipped = flipped;
-
-    public void Update(float2 p0, float2 p1, float4x4 rotation)
+    sealed class EyeRegion
     {
-        var box = BoundingBox.CenterExtent
-          ((p0 + p1) / 2, math.distance(p0, p1) * 1.4f);
+        #region Exposed proeprties
 
-        CropMatrix = math.mul(box.CropMatrix, rotation);
+        public float4x4 CropMatrix { get; private set; }
 
-        if (_flipped)
-            CropMatrix = math.mul(CropMatrix, MathUtil.HorizontalFlip());
+        #endregion
+
+        #region Internal state
+
+        bool _flipped;
+
+        #endregion
+
+        #region Public method
+
+        public EyeRegion(bool flipped = false)
+          => _flipped = flipped;
+
+        public void Update(float2 p0, float2 p1, float4x4 rotation)
+        {
+            var box = BoundingBox.CenterExtent
+              ((p0 + p1) / 2, math.distance(p0, p1) * 1.4f);
+
+            CropMatrix = math.mul(box.CropMatrix, rotation);
+
+            if (_flipped)
+                CropMatrix = math.mul(CropMatrix, MathUtil.HorizontalFlip());
+        }
+
+        #endregion
     }
-
-    #endregion
-}
 
 } // namespace MediaPipe.FaceMesh
